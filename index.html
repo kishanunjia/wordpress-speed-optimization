@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!-- SEO Meta -->
+  <title>WordPress Speed Optimization Expert | Kishan Unjia</title>
+  <meta name="description" content="Hire Kishan Unjia, a senior WordPress developer with 12+ years of experience. Expert WordPress speed optimization, WooCommerce, Elementor, Core Web Vitals, and performance audits.">
+  <meta name="keywords" content="WordPress speed optimization, Core Web Vitals, WooCommerce optimization, Elementor speed, PageSpeed Insights, WordPress performance expert, Kishan Unjia, website speed, Redis cache, LiteSpeed, Cloudflare setup">
+  <meta name="author" content="Kishan Unjia">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://kishanunjia.github.io/speed-optimization/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="WordPress Speed Optimization Expert | Kishan Unjia">
+  <meta property="og:description" content="Improve PageSpeed Insights, Core Web Vitals, and WordPress performance with 12+ years of professional experience.">
+  <meta property="og:url" content="https://kishanunjia.github.io/speed-optimization/">
+  <meta property="og:site_name" content="Kishan Unjia - WordPress Speed Expert">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="WordPress Speed Optimization Expert | Kishan Unjia">
+  <meta name="twitter:description" content="Professional WordPress speed optimization for business owners, agencies, and eCommerce stores.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== CSS Variables ===== */
+    :root {
+      --primary: #007CF0;
+      --secondary: #00DFD8;
+      --success: #1DBF73;
+      --bg: #F8FAFC;
+      --text: #1E293B;
+      --text-muted: #64748B;
+      --white: #ffffff;
+      --glass: rgba(255, 255, 255, 0.72);
+      --glass-border: rgba(255, 255, 255, 0.45);
+      --shadow: 0 8px 32px rgba(0, 124, 240, 0.08);
+      --shadow-lg: 0 20px 60px rgba(0, 124, 240, 0.12);
+      --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+      --radius: 16px;
+      --radius-sm: 10px;
+      --nav-h: 72px;
+      --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    [data-theme="dark"] {
+      --bg: #0F172A;
+      --text: #F1F5F9;
+      --text-muted: #94A3B8;
+      --glass: rgba(15, 23, 42, 0.75);
+      --glass-border: rgba(148, 163, 184, 0.15);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.4);
+      --white: #1E293B;
+    }
+
+    /* ===== Reset & Base ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: var(--nav-h); }
+    body {
+      font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: var(--primary); text-decoration: none; transition: color var(--transition); }
+    a:hover { color: var(--secondary); }
+    ul { list-style: none; }
+    button { cursor: pointer; font-family: inherit; border: none; background: none; }
+    :focus-visible { outline: 3px solid var(--primary); outline-offset: 2px; }
+
+    .container { width: min(1140px, 92%); margin: 0 auto; }
+    .section { padding: 5rem 0; position: relative; }
+    .section-header { text-align: center; max-width: 640px; margin: 0 auto 3rem; }
+    .section-tag {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--primary);
+      background: rgba(0, 124, 240, 0.1);
+      padding: 0.35rem 1rem;
+      border-radius: 50px;
+      margin-bottom: 0.75rem;
+    }
+    .section-title { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 700; line-height: 1.2; margin-bottom: 0.75rem; }
+    .section-desc { color: var(--text-muted); font-size: 1.05rem; }
+
+    /* ===== Loading Screen ===== */
+    .loader {
+      position: fixed; inset: 0; z-index: 9999;
+      background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity 0.5s, visibility 0.5s;
+    }
+    .loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+    .loader-ring {
+      width: 48px; height: 48px;
+      border: 3px solid rgba(0, 124, 240, 0.15);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ===== Navigation ===== */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      height: var(--nav-h);
+      transition: background var(--transition), box-shadow var(--transition);
+    }
+    .nav.scrolled {
+      background: var(--glass);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+      box-shadow: var(--shadow);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 100%;
+    }
+    .logo {
+      font-size: 1.25rem; font-weight: 700; color: var(--text);
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .logo-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: var(--gradient);
+      display: grid; place-items: center;
+    }
+    .nav-links { display: flex; align-items: center; gap: 2rem; }
+    .nav-links a {
+      color: var(--text-muted); font-size: 0.9rem; font-weight: 500;
+      transition: color var(--transition);
+    }
+    .nav-links a:hover { color: var(--primary); }
+    .nav-actions { display: flex; align-items: center; gap: 0.75rem; }
+    .theme-toggle {
+      width: 40px; height: 40px; border-radius: 50%;
+      display: grid; place-items: center;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      color: var(--text);
+      transition: transform var(--transition);
+    }
+    .theme-toggle:hover { transform: scale(1.08); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; padding: 4px; }
+    .hamburger span {
+      width: 24px; height: 2px; background: var(--text);
+      border-radius: 2px; transition: var(--transition);
+    }
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    /* ===== Buttons ===== */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+      padding: 0.85rem 1.75rem; border-radius: 50px;
+      font-size: 0.95rem; font-weight: 600;
+      transition: transform var(--transition), box-shadow var(--transition);
+      white-space: nowrap;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary {
+      background: var(--gradient); color: #fff;
+      box-shadow: 0 4px 20px rgba(0, 124, 240, 0.35);
+    }
+    .btn-primary:hover { box-shadow: 0 8px 30px rgba(0, 124, 240, 0.45); color: #fff; }
+    .btn-outline {
+      background: transparent; color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+    .btn-outline:hover { background: var(--primary); color: #fff; }
+    .btn-ghost {
+      background: var(--glass); color: var(--text);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(10px);
+    }
+    .btn-sm { padding: 0.6rem 1.25rem; font-size: 0.85rem; }
+
+    /* ===== Glass Card ===== */
+    .glass-card {
+      background: var(--glass);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .glass-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+
+    /* ===== Hero ===== */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center;
+      padding-top: var(--nav-h); position: relative; overflow: hidden;
+    }
+    .hero-blobs { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+    .blob {
+      position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.35;
+      animation: float 8s ease-in-out infinite;
+    }
+    .blob-1 { width: 500px; height: 500px; background: var(--primary); top: -10%; right: -10%; }
+    .blob-2 { width: 400px; height: 400px; background: var(--secondary); bottom: 10%; left: -5%; animation-delay: -3s; }
+    .blob-3 { width: 300px; height: 300px; background: var(--success); top: 40%; left: 40%; animation-delay: -5s; opacity: 0.2; }
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(30px, -30px) scale(1.05); }
+      66% { transform: translate(-20px, 20px) scale(0.95); }
+    }
+    .hero-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;
+      align-items: center; position: relative; z-index: 1;
+    }
+    .hero-content h1 {
+      font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 800;
+      line-height: 1.15; margin-bottom: 1.25rem;
+    }
+    .hero-content h1 span {
+      background: var(--gradient); -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero-sub { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 2rem; max-width: 520px; }
+    .hero-ctas { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 2.5rem; }
+    .hero-stats { display: flex; gap: 2rem; flex-wrap: wrap; }
+    .hero-stat strong {
+      display: block; font-size: 1.75rem; font-weight: 700;
+      background: var(--gradient); -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero-stat span { font-size: 0.85rem; color: var(--text-muted); }
+    .hero-visual { position: relative; }
+    .hero-illustration {
+      width: 100%; aspect-ratio: 1; max-width: 480px; margin: 0 auto;
+    }
+
+    /* ===== Why Choose ===== */
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+    .why-card { padding: 2rem; text-align: center; }
+    .why-icon {
+      width: 56px; height: 56px; margin: 0 auto 1rem;
+      border-radius: 14px; background: var(--gradient);
+      display: grid; place-items: center; color: #fff;
+    }
+    .why-card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; }
+    .why-card p { font-size: 0.9rem; color: var(--text-muted); }
+
+    /* ===== Services ===== */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+    }
+    .service-card { padding: 1.75rem; display: flex; gap: 1rem; align-items: flex-start; }
+    .service-icon {
+      flex-shrink: 0; width: 44px; height: 44px;
+      border-radius: 12px; background: rgba(0, 124, 240, 0.1);
+      display: grid; place-items: center; color: var(--primary);
+    }
+    .service-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem; }
+    .service-card p { font-size: 0.85rem; color: var(--text-muted); }
+
+    /* ===== Benefits ===== */
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .benefit-card { padding: 2rem; display: flex; gap: 1.25rem; align-items: flex-start; }
+    .benefit-num {
+      flex-shrink: 0; width: 48px; height: 48px;
+      border-radius: 50%; background: var(--gradient);
+      display: grid; place-items: center;
+      font-weight: 700; color: #fff; font-size: 1.1rem;
+    }
+    .benefit-card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.35rem; }
+    .benefit-card p { font-size: 0.9rem; color: var(--text-muted); }
+
+    /* ===== Timeline ===== */
+    .timeline { position: relative; max-width: 700px; margin: 0 auto; }
+    .timeline::before {
+      content: ''; position: absolute; left: 28px; top: 0; bottom: 0;
+      width: 2px; background: var(--gradient);
+    }
+    .timeline-item {
+      position: relative; padding-left: 72px; padding-bottom: 2.5rem;
+      opacity: 0; transform: translateX(-20px);
+      transition: opacity 0.6s, transform 0.6s;
+    }
+    .timeline-item.visible { opacity: 1; transform: translateX(0); }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-dot {
+      position: absolute; left: 16px; top: 4px;
+      width: 26px; height: 26px; border-radius: 50%;
+      background: var(--gradient); border: 3px solid var(--bg);
+      z-index: 1;
+    }
+    .timeline-content {
+      padding: 1.5rem 2rem;
+    }
+    .timeline-content h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.35rem; }
+    .timeline-content p { font-size: 0.9rem; color: var(--text-muted); }
+
+    /* ===== Tech Stack ===== */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 1rem;
+    }
+    .tech-card {
+      padding: 1.5rem 1rem; text-align: center;
+      transition: transform var(--transition);
+    }
+    .tech-card:hover { transform: translateY(-6px) scale(1.03); }
+    .tech-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+    .tech-card span { font-size: 0.85rem; font-weight: 600; }
+
+    /* ===== Portfolio ===== */
+    .portfolio-list {
+      display: flex; flex-direction: column; gap: 2.5rem;
+      max-width: 960px; margin: 0 auto;
+    }
+    .portfolio-card { overflow: hidden; }
+    .portfolio-card-inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    }
+    .portfolio-card.reverse .portfolio-img { order: 2; }
+    .portfolio-card.reverse .portfolio-body { order: 1; }
+    .portfolio-img {
+      background: #E2E8F0; position: relative; overflow: hidden;
+      min-height: 280px;
+    }
+    .portfolio-img img {
+      width: 100%; height: 100%; object-fit: cover; object-position: top center;
+    }
+    .portfolio-body { padding: 2rem; display: flex; flex-direction: column; justify-content: center; }
+    .portfolio-body h3 { font-size: 1.35rem; font-weight: 700; margin-bottom: 0.35rem; }
+    .portfolio-url {
+      font-size: 0.85rem; color: var(--primary); font-weight: 500; margin-bottom: 0.75rem;
+      display: inline-block;
+    }
+    .portfolio-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+    .portfolio-tag {
+      font-size: 0.75rem; font-weight: 600; padding: 0.3rem 0.75rem;
+      border-radius: 50px; background: rgba(0, 124, 240, 0.1); color: var(--primary);
+    }
+    .portfolio-body p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.25rem; line-height: 1.7; }
+    .portfolio-metrics {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem;
+      align-items: end;
+    }
+    .metric {
+      display: flex; flex-direction: column; align-items: center;
+      padding: 0.75rem 0.5rem; border-radius: var(--radius-sm); text-align: center;
+      background: rgba(0, 124, 240, 0.06);
+    }
+    .metric-label {
+      min-height: 2.5em; width: 100%;
+      display: flex; align-items: flex-end; justify-content: center;
+      font-size: 0.65rem; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.04em;
+      line-height: 1.25; text-align: center;
+    }
+    .metric-value {
+      margin-top: 0.5rem; line-height: 1;
+      font-size: 1.35rem; font-weight: 700;
+    }
+    .metric-value.good { color: var(--success); }
+    .metric-value.mid { color: #F59E0B; }
+    .portfolio-score-note {
+      font-size: 0.75rem; color: var(--text-muted); margin-top: 0.75rem; font-style: italic;
+    }
+    @media (max-width: 768px) {
+      .portfolio-card-inner { grid-template-columns: 1fr; }
+      .portfolio-card.reverse .portfolio-img,
+      .portfolio-card.reverse .portfolio-body { order: unset; }
+      .portfolio-metrics { grid-template-columns: repeat(2, 1fr); }
+      .portfolio-img { min-height: 200px; }
+    }
+
+    /* ===== Testimonials ===== */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .testimonial-card { padding: 2rem; }
+    .stars { color: #FBBF24; margin-bottom: 1rem; letter-spacing: 2px; }
+    .testimonial-text { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 1.5rem; font-style: italic; line-height: 1.7; }
+    .testimonial-author { display: flex; align-items: center; gap: 0.75rem; }
+    .avatar {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--gradient); display: grid; place-items: center;
+      color: #fff; font-weight: 700; font-size: 1rem;
+    }
+    .author-info strong { display: block; font-size: 0.95rem; }
+    .author-info span { font-size: 0.8rem; color: var(--text-muted); }
+
+    /* ===== FAQ ===== */
+    .faq-list { max-width: 760px; margin: 0 auto; }
+    .faq-item {
+      border-bottom: 1px solid var(--glass-border);
+      overflow: hidden;
+    }
+    .faq-question {
+      width: 100%; text-align: left; padding: 1.25rem 0;
+      font-size: 1rem; font-weight: 600; color: var(--text);
+      display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+    }
+    .faq-question::after {
+      content: '+'; font-size: 1.5rem; font-weight: 300;
+      color: var(--primary); transition: transform var(--transition);
+      flex-shrink: 0;
+    }
+    .faq-item.active .faq-question::after { transform: rotate(45deg); }
+    .faq-answer {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.4s ease;
+    }
+    .faq-item.active .faq-answer { max-height: 300px; padding-bottom: 1.25rem; }
+    .faq-answer p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; }
+
+    /* ===== Final CTA ===== */
+    .cta-section {
+      background: var(--gradient); border-radius: var(--radius);
+      padding: 4rem 2rem; text-align: center; color: #fff;
+      position: relative; overflow: hidden;
+    }
+    .cta-section::before {
+      content: ''; position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .cta-section h2 { font-size: clamp(1.75rem, 4vw, 2.25rem); font-weight: 700; margin-bottom: 0.75rem; position: relative; }
+    .cta-section p { opacity: 0.9; margin-bottom: 2rem; max-width: 560px; margin-left: auto; margin-right: auto; position: relative; }
+    .cta-buttons { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; position: relative; }
+    .cta-section .btn-primary { background: #fff; color: var(--primary); box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
+    .cta-section .btn-outline { border-color: #fff; color: #fff; }
+    .cta-section .btn-outline:hover { background: #fff; color: var(--primary); }
+    .cta-section .btn-ghost { background: rgba(255,255,255,0.15); color: #fff; border-color: rgba(255,255,255,0.3); }
+
+    /* ===== Footer ===== */
+    .footer { padding: 3rem 0 1.5rem; border-top: 1px solid var(--glass-border); }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    .footer-brand p { color: var(--text-muted); font-size: 0.9rem; margin-top: 0.75rem; max-width: 320px; }
+    .footer h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 1rem; }
+    .footer-links li { margin-bottom: 0.5rem; }
+    .footer-links a { color: var(--text-muted); font-size: 0.9rem; }
+    .footer-links a:hover { color: var(--primary); }
+    .social-links { display: flex; gap: 0.75rem; margin-top: 1rem; }
+    .social-links a {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--glass); border: 1px solid var(--glass-border);
+      display: grid; place-items: center; color: var(--text);
+      transition: transform var(--transition), background var(--transition);
+    }
+    .social-links a:hover { transform: translateY(-3px); background: var(--primary); color: #fff; }
+    .footer-bottom {
+      text-align: center; padding-top: 1.5rem;
+      border-top: 1px solid var(--glass-border);
+      font-size: 0.85rem; color: var(--text-muted);
+    }
+
+    /* ===== Back to Top ===== */
+    .back-to-top {
+      position: fixed; bottom: 5rem; right: 1.5rem; z-index: 900;
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--gradient); color: #fff;
+      display: grid; place-items: center;
+      box-shadow: var(--shadow-lg);
+      opacity: 0; visibility: hidden;
+      transition: opacity var(--transition), visibility var(--transition), transform var(--transition);
+    }
+    .back-to-top.visible { opacity: 1; visibility: visible; }
+    .back-to-top:hover { transform: translateY(-4px); }
+
+    /* ===== Sticky CTA (Mobile) ===== */
+    .sticky-cta {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 950;
+      padding: 0.75rem 1rem;
+      background: var(--glass);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid var(--glass-border);
+      display: none; gap: 0.5rem;
+      transform: translateY(100%);
+      transition: transform var(--transition);
+    }
+    .sticky-cta.visible { transform: translateY(0); }
+    .sticky-cta .btn { flex: 1; padding: 0.7rem; font-size: 0.8rem; }
+
+    /* ===== Scroll Animations ===== */
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; text-align: center; }
+      .hero-sub { margin-left: auto; margin-right: auto; }
+      .hero-ctas, .hero-stats { justify-content: center; }
+      .hero-visual { order: -1; max-width: 360px; margin: 0 auto; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .nav-links {
+        position: fixed; top: var(--nav-h); left: 0; right: 0;
+        background: var(--glass); backdrop-filter: blur(20px);
+        flex-direction: column; padding: 1.5rem; gap: 1rem;
+        border-bottom: 1px solid var(--glass-border);
+        transform: translateY(-120%); transition: transform var(--transition);
+      }
+      .nav-links.open { transform: translateY(0); }
+      .hamburger { display: flex; }
+      .sticky-cta { display: flex; }
+      .back-to-top { bottom: 5.5rem; }
+      .section { padding: 3.5rem 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Loading Screen -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader-ring"></div>
+  </div>
+
+  <!-- Navigation -->
+  <header class="nav" id="nav" role="banner">
+    <div class="container nav-inner">
+      <a href="#" class="logo" aria-label="Kishan Unjia Home">
+        <span class="logo-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </span>
+        Kishan Unjia
+      </a>
+      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+        <a href="#services">Services</a>
+        <a href="#benefits">Benefits</a>
+        <a href="#process">Process</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#testimonials">Reviews</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+          <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        </button>
+        <a href="https://www.fiverr.com/kishanunjia" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">Hire Me</a>
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- Hero Section -->
+    <section class="hero" id="hero" aria-labelledby="hero-heading">
+      <div class="hero-blobs" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+      </div>
+      <div class="container hero-grid">
+        <div class="hero-content reveal">
+          <h1 id="hero-heading">WordPress <span>Speed Optimization</span> Expert</h1>
+          <p class="hero-sub">Improve your Google PageSpeed Insights, Core Web Vitals, WooCommerce, Elementor, and overall website performance with 12+ years of professional WordPress experience.</p>
+          <div class="hero-ctas">
+            <a href="https://www.fiverr.com/kishanunjia" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+              Hire on Fiverr
+            </a>
+            <a href="https://www.freelancer.in/u/kishanunjia" class="btn btn-outline" target="_blank" rel="noopener noreferrer">Hire on Freelancer</a>
+            <a href="https://kishan-unjia.netlify.app/" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">View Portfolio</a>
+          </div>
+          <div class="hero-stats">
+            <div class="hero-stat"><strong data-count="12">0</strong><span>Years Experience</span></div>
+            <div class="hero-stat"><strong data-count="500">0</strong><span>Projects Delivered</span></div>
+            <div class="hero-stat"><strong data-count="98">0</strong><span>Client Satisfaction %</span></div>
+          </div>
+        </div>
+        <div class="hero-visual reveal">
+          <div class="hero-illustration" role="img" aria-label="WordPress speed optimization dashboard illustration">
+            <svg viewBox="0 0 480 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="40" y="60" width="400" height="280" rx="20" fill="url(#g1)" opacity="0.15"/>
+              <rect x="60" y="80" width="360" height="240" rx="16" fill="var(--white)" stroke="url(#g1)" stroke-width="2"/>
+              <circle cx="240" cy="180" r="60" stroke="url(#g1)" stroke-width="8" fill="none" stroke-dasharray="280" stroke-dashoffset="60" stroke-linecap="round">
+                <animate attributeName="stroke-dashoffset" values="280;60;280" dur="4s" repeatCount="indefinite"/>
+              </circle>
+              <text x="240" y="188" text-anchor="middle" font-family="Poppins,sans-serif" font-size="28" font-weight="700" fill="#007CF0">92</text>
+              <rect x="80" y="260" width="120" height="12" rx="6" fill="#007CF0" opacity="0.8"><animate attributeName="width" values="60;120;60" dur="3s" repeatCount="indefinite"/></rect>
+              <rect x="80" y="285" width="200" height="12" rx="6" fill="#00DFD8" opacity="0.7"><animate attributeName="width" values="100;200;100" dur="3.5s" repeatCount="indefinite"/></rect>
+              <rect x="80" y="310" width="160" height="12" rx="6" fill="#1DBF73" opacity="0.7"><animate attributeName="width" values="80;160;80" dur="4s" repeatCount="indefinite"/></rect>
+              <rect x="280" y="260" width="120" height="60" rx="10" fill="url(#g1)" opacity="0.2"/>
+              <path d="M300 290 L320 270 L340 285 L360 255" stroke="#1DBF73" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#007CF0"/><stop offset="1" stop-color="#00DFD8"/></linearGradient></defs>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Choose Me -->
+    <section class="section" id="why" aria-labelledby="why-heading">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">Why Choose Me</span>
+          <h2 class="section-title" id="why-heading">Trusted WordPress Performance Specialist</h2>
+          <p class="section-desc">A senior developer dedicated to making your WordPress site faster, more reliable, and conversion-ready.</p>
+        </div>
+        <div class="why-grid">
+          <article class="glass-card why-card reveal">
+            <div class="why-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+            <h3>12+ Years Experience</h3>
+            <p>Over a decade of hands-on WordPress development and performance tuning across diverse industries.</p>
+          </article>
+          <article class="glass-card why-card reveal">
+            <div class="why-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg></div>
+            <h3>Senior WordPress Developer</h3>
+            <p>Deep expertise in custom themes, plugins, and enterprise-level WordPress architecture.</p>
+          </article>
+          <article class="glass-card why-card reveal">
+            <div class="why-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+            <h3>Performance Expert</h3>
+            <p>Specialized in identifying bottlenecks and implementing proven speed optimization strategies.</p>
+          </article>
+          <article class="glass-card why-card reveal">
+            <div class="why-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+            <h3>Core Web Vitals Specialist</h3>
+            <p>Focused on LCP, INP, and CLS improvements that align with Google's ranking signals.</p>
+          </article>
+          <article class="glass-card why-card reveal">
+            <div class="why-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg></div>
+            <h3>WooCommerce Expert</h3>
+            <p>Optimize checkout flows, product pages, and cart performance for higher eCommerce conversions.</p>
+          </article>
+          <article class="glass-card why-card reveal">
+            <div class="why-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+            <h3>Elementor Expert</h3>
+            <p>Reduce bloat, optimize assets, and fine-tune Elementor-built sites for peak performance.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section class="section" id="services" aria-labelledby="services-heading">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">Services</span>
+          <h2 class="section-title" id="services-heading">WordPress Speed Optimization Services</h2>
+          <p class="section-desc">Comprehensive performance solutions tailored to your WordPress, WooCommerce, or Elementor website.</p>
+        </div>
+        <div class="services-grid">
+          <article class="glass-card service-card reveal">
+            <div class="service-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+            <div><h3>WordPress Speed Optimization</h3><p>Full-site performance overhaul including caching, minification, and code optimization.</p></div>
+          </article>
+          <article class="glass-card service-card reveal">
+            <div class="service-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg></div>
+            <div><h3>WooCommerce Optimization</h3><p>Faster product pages, optimized checkout, and improved cart performance.</p></div>
+          </article>
+          <article class="glass-card service-card reveal">
+            <div class="service-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg></div>
+            <div><h3>Elementor Optimization</h3><p>Reduce render-blocking resources and optimize Elementor widget loading.</p></div>
+          </article>
+          <article class="glass-card service-card reveal">
+            <div class="service-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div>
+            <div><h3>Database Optimization</h3><p>Clean up revisions, transients, and optimize database queries for speed.</p></div>
+          </article>
+          <article class="glass-card service-card reveal">
+            <div class="service-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
+            <div><h3>Image Optimization</h3><p>WebP conversion, lazy loading, responsive images, and compression strategies.</p></div>
+          </article>
+          <article class="glass-card service-card reveal">
+            <div class="service-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div><h3>Cloudflare Setup</h3><p>CDN configuration, caching rules, and security headers for global performance.</p></div>
+          </article>
+          <article class="glass-card service-card reveal">
+            <div class="service-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M9 9h6v6H9z"/></svg></div>
+            <div><h3>Redis Cache</h3><p>Object caching with Redis for dramatically faster database operations.</p></div>
+          </article>
+          <article class="glass-card service-card reveal">
+            <div class="service-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+            <div><h3>LiteSpeed Cache</h3><p>Server-level caching configuration for LiteSpeed and OpenLiteSpeed servers.</p></div>
+          </article>
+          <article class="glass-card service-card reveal">
+            <div class="service-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/></svg></div>
+            <div><h3>Server Optimization</h3><p>PHP, MySQL, and web server tuning for maximum hosting performance.</p></div>
+          </article>
+          <article class="glass-card service-card reveal">
+            <div class="service-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div>
+            <div><h3>Core Web Vitals</h3><p>Targeted fixes for LCP, INP, and CLS to meet Google's performance standards.</p></div>
+          </article>
+          <article class="glass-card service-card reveal">
+            <div class="service-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div>
+            <div><h3>Technical SEO</h3><p>Performance-related SEO improvements including schema and crawl optimization.</p></div>
+          </article>
+          <article class="glass-card service-card reveal">
+            <div class="service-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg></div>
+            <div><h3>Performance Audit</h3><p>Detailed report with actionable recommendations and priority fixes.</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Performance Benefits -->
+    <section class="section" id="benefits" aria-labelledby="benefits-heading">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">Benefits</span>
+          <h2 class="section-title" id="benefits-heading">Performance Benefits That Drive Results</h2>
+          <p class="section-desc">My optimization process is designed to help achieve excellent PageSpeed Insights and Core Web Vitals scores depending on hosting, theme, plugins, third-party scripts, and server configuration.</p>
+        </div>
+        <div class="benefits-grid">
+          <article class="glass-card benefit-card reveal">
+            <div class="benefit-num" aria-hidden="true">1</div>
+            <div><h3>Faster Website</h3><p>Significantly reduced load times for a snappier browsing experience across all devices.</p></div>
+          </article>
+          <article class="glass-card benefit-card reveal">
+            <div class="benefit-num" aria-hidden="true">2</div>
+            <div><h3>Better User Experience</h3><p>Smooth navigation and instant page transitions keep visitors engaged longer.</p></div>
+          </article>
+          <article class="glass-card benefit-card reveal">
+            <div class="benefit-num" aria-hidden="true">3</div>
+            <div><h3>Higher Google Rankings</h3><p>Speed is a ranking factor — faster sites tend to perform better in search results.</p></div>
+          </article>
+          <article class="glass-card benefit-card reveal">
+            <div class="benefit-num" aria-hidden="true">4</div>
+            <div><h3>Improved Conversion Rate</h3><p>Every second counts — faster sites convert more visitors into paying customers.</p></div>
+          </article>
+          <article class="glass-card benefit-card reveal">
+            <div class="benefit-num" aria-hidden="true">5</div>
+            <div><h3>Reduced Bounce Rate</h3><p>Users leave slow sites. Speed optimization keeps them on your pages longer.</p></div>
+          </article>
+          <article class="glass-card benefit-card reveal">
+            <div class="benefit-num" aria-hidden="true">6</div>
+            <div><h3>Better Core Web Vitals</h3><p>Improved LCP, INP, and CLS metrics that Google uses to evaluate page experience.</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Optimization Process -->
+    <section class="section" id="process" aria-labelledby="process-heading">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">Process</span>
+          <h2 class="section-title" id="process-heading">My Optimization Process</h2>
+          <p class="section-desc">A proven, transparent workflow from initial audit to ongoing support.</p>
+        </div>
+        <div class="timeline" role="list">
+          <div class="timeline-item" role="listitem">
+            <div class="timeline-dot" aria-hidden="true"></div>
+            <div class="glass-card timeline-content"><h3>1. Audit</h3><p>Comprehensive analysis using PageSpeed Insights, GTmetrix, and WebPageTest to identify all performance bottlenecks.</p></div>
+          </div>
+          <div class="timeline-item" role="listitem">
+            <div class="timeline-dot" aria-hidden="true"></div>
+            <div class="glass-card timeline-content"><h3>2. Analysis</h3><p>Deep dive into server config, plugins, theme code, database, images, and third-party scripts affecting speed.</p></div>
+          </div>
+          <div class="timeline-item" role="listitem">
+            <div class="timeline-dot" aria-hidden="true"></div>
+            <div class="glass-card timeline-content"><h3>3. Optimization</h3><p>Implement caching, code minification, image optimization, CDN setup, and server-level improvements.</p></div>
+          </div>
+          <div class="timeline-item" role="listitem">
+            <div class="timeline-dot" aria-hidden="true"></div>
+            <div class="glass-card timeline-content"><h3>4. Testing</h3><p>Rigorous before-and-after testing across devices and networks to verify measurable improvements.</p></div>
+          </div>
+          <div class="timeline-item" role="listitem">
+            <div class="timeline-dot" aria-hidden="true"></div>
+            <div class="glass-card timeline-content"><h3>5. Delivery</h3><p>Detailed performance report with screenshots, metrics comparison, and documentation of all changes made.</p></div>
+          </div>
+          <div class="timeline-item" role="listitem">
+            <div class="timeline-dot" aria-hidden="true"></div>
+            <div class="glass-card timeline-content"><h3>6. Support</h3><p>Post-delivery support to ensure optimizations remain effective and your site stays fast over time.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Technology Stack -->
+    <section class="section" id="tech" aria-labelledby="tech-heading">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">Tech Stack</span>
+          <h2 class="section-title" id="tech-heading">Technologies I Work With</h2>
+          <p class="section-desc">Expert-level proficiency across the WordPress performance ecosystem.</p>
+        </div>
+        <div class="tech-grid">
+          <div class="glass-card tech-card reveal"><div class="tech-icon" aria-hidden="true">🔷</div><span>WordPress</span></div>
+          <div class="glass-card tech-card reveal"><div class="tech-icon" aria-hidden="true">🐘</div><span>PHP</span></div>
+          <div class="glass-card tech-card reveal"><div class="tech-icon" aria-hidden="true">🛒</div><span>WooCommerce</span></div>
+          <div class="glass-card tech-card reveal"><div class="tech-icon" aria-hidden="true">🎨</div><span>Elementor</span></div>
+          <div class="glass-card tech-card reveal"><div class="tech-icon" aria-hidden="true">⚡</div><span>Redis</span></div>
+          <div class="glass-card tech-card reveal"><div class="tech-icon" aria-hidden="true">☁️</div><span>Cloudflare</span></div>
+          <div class="glass-card tech-card reveal"><div class="tech-icon" aria-hidden="true">🚀</div><span>LiteSpeed</span></div>
+          <div class="glass-card tech-card reveal"><div class="tech-icon" aria-hidden="true">🌐</div><span>Nginx</span></div>
+          <div class="glass-card tech-card reveal"><div class="tech-icon" aria-hidden="true">🔧</div><span>Apache</span></div>
+          <div class="glass-card tech-card reveal"><div class="tech-icon" aria-hidden="true">🗄️</div><span>MySQL</span></div>
+          <div class="glass-card tech-card reveal"><div class="tech-icon" aria-hidden="true">🎯</div><span>WP Rocket</span></div>
+          <div class="glass-card tech-card reveal"><div class="tech-icon" aria-hidden="true">📄</div><span>HTML</span></div>
+          <div class="glass-card tech-card reveal"><div class="tech-icon" aria-hidden="true">🎭</div><span>CSS</span></div>
+          <div class="glass-card tech-card reveal"><div class="tech-icon" aria-hidden="true">📜</div><span>JavaScript</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Portfolio -->
+    <section class="section" id="portfolio" aria-labelledby="portfolio-heading">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">Portfolio</span>
+          <h2 class="section-title" id="portfolio-heading">Featured Projects</h2>
+          <p class="section-desc">Custom WordPress &amp; WooCommerce development with performance-first architecture. Scores from Google PageSpeed Insights.</p>
+        </div>
+        <div class="portfolio-list">
+          <article class="glass-card portfolio-card reveal">
+            <div class="portfolio-card-inner">
+              <div class="portfolio-img">
+                <img
+                  src="assets/openxcode-pagespeed.png"
+                  alt="Google PageSpeed Insights report for OpenXcode showing Performance 93, Accessibility 100, Best Practices 100, and SEO 100"
+                  width="640"
+                  height="400"
+                  loading="lazy"
+                  decoding="async"
+                >
+              </div>
+              <div class="portfolio-body">
+                <h3>OpenXcode</h3>
+                <a href="https://openxcode.com/" class="portfolio-url" target="_blank" rel="noopener noreferrer">openxcode.com</a>
+                <div class="portfolio-tags">
+                  <span class="portfolio-tag">Custom WordPress Theme</span>
+                  <span class="portfolio-tag">Tailwind CSS</span>
+                  <span class="portfolio-tag">ACF</span>
+                  <span class="portfolio-tag">Speed Optimization</span>
+                </div>
+                <p>Designed and developed a fully custom WordPress theme using Tailwind CSS and Advanced Custom Fields (ACF). Built with clean, semantic markup and performance-focused architecture to deliver excellent Lighthouse scores.</p>
+                <div class="portfolio-metrics" role="list" aria-label="PageSpeed Insights scores for OpenXcode">
+                  <div class="metric" role="listitem">
+                    <div class="metric-label">Performance</div>
+                    <div class="metric-value good">93</div>
+                  </div>
+                  <div class="metric" role="listitem">
+                    <div class="metric-label">Accessibility</div>
+                    <div class="metric-value good">100</div>
+                  </div>
+                  <div class="metric" role="listitem">
+                    <div class="metric-label">Best Practices</div>
+                    <div class="metric-value good">100</div>
+                  </div>
+                  <div class="metric" role="listitem">
+                    <div class="metric-label">SEO</div>
+                    <div class="metric-value good">100</div>
+                  </div>
+                </div>
+                <p class="portfolio-score-note">Mobile · Google PageSpeed Insights</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="glass-card portfolio-card reverse reveal">
+            <div class="portfolio-card-inner">
+              <div class="portfolio-img">
+                <img
+                  src="assets/khushboojewel-pagespeed.png"
+                  alt="Google PageSpeed Insights report for Khushboo Jewel showing Performance 91, Accessibility 78, Best Practices 96, and SEO 85"
+                  width="640"
+                  height="400"
+                  loading="lazy"
+                  decoding="async"
+                >
+              </div>
+              <div class="portfolio-body">
+                <h3>Khushboo Jewel</h3>
+                <a href="https://khushboojewel.com/" class="portfolio-url" target="_blank" rel="noopener noreferrer">khushboojewel.com</a>
+                <div class="portfolio-tags">
+                  <span class="portfolio-tag">WooCommerce</span>
+                  <span class="portfolio-tag">Custom WordPress Theme</span>
+                  <span class="portfolio-tag">eCommerce</span>
+                  <span class="portfolio-tag">Speed Optimization</span>
+                </div>
+                <p>Built and optimized a premium WooCommerce jewellery store with custom WordPress theme development, product catalog architecture, and performance tuning for a fast shopping experience across collections, combos, and checkout.</p>
+                <div class="portfolio-metrics" role="list" aria-label="PageSpeed Insights scores for Khushboo Jewel">
+                  <div class="metric" role="listitem">
+                    <div class="metric-label">Performance</div>
+                    <div class="metric-value good">91</div>
+                  </div>
+                  <div class="metric" role="listitem">
+                    <div class="metric-label">Accessibility</div>
+                    <div class="metric-value mid">78</div>
+                  </div>
+                  <div class="metric" role="listitem">
+                    <div class="metric-label">Best Practices</div>
+                    <div class="metric-value good">96</div>
+                  </div>
+                  <div class="metric" role="listitem">
+                    <div class="metric-label">SEO</div>
+                    <div class="metric-value mid">85</div>
+                  </div>
+                </div>
+                <p class="portfolio-score-note">Desktop · Google PageSpeed Insights</p>
+              </div>
+            </div>
+          </article>
+        </div>
+        <div style="text-align:center;margin-top:2.5rem;display:flex;flex-wrap:wrap;gap:0.75rem;justify-content:center" class="reveal">
+          <a href="https://openxcode.com/" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Visit OpenXcode</a>
+          <a href="https://khushboojewel.com/" class="btn btn-outline" target="_blank" rel="noopener noreferrer">Visit Khushboo Jewel</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section" id="testimonials" aria-labelledby="testimonials-heading">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">Testimonials</span>
+          <h2 class="section-title" id="testimonials-heading">What Clients Say</h2>
+          <p class="section-desc">Trusted by business owners, agencies, and eCommerce brands worldwide.</p>
+        </div>
+        <div class="testimonials-grid">
+          <article class="glass-card testimonial-card reveal">
+            <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+            <p class="testimonial-text">"Kishan transformed our WooCommerce store from painfully slow to blazing fast. Our conversion rate improved noticeably within weeks. Highly recommended!"</p>
+            <div class="testimonial-author">
+              <div class="avatar" aria-hidden="true">JM</div>
+              <div class="author-info"><strong>James Mitchell</strong><span>eCommerce Store Owner, USA</span></div>
+            </div>
+          </article>
+          <article class="glass-card testimonial-card reveal">
+            <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+            <p class="testimonial-text">"As an agency, we rely on Kishan for all our client speed optimization projects. His technical expertise and clear reporting make him invaluable."</p>
+            <div class="testimonial-author">
+              <div class="avatar" aria-hidden="true">SP</div>
+              <div class="author-info"><strong>Sarah Patel</strong><span>Digital Agency Director, UK</span></div>
+            </div>
+          </article>
+          <article class="glass-card testimonial-card reveal">
+            <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+            <p class="testimonial-text">"Our Elementor site was scoring poorly on Core Web Vitals. Kishan fixed everything — LCP, CLS, the works. Professional and responsive throughout."</p>
+            <div class="testimonial-author">
+              <div class="avatar" aria-hidden="true">RK</div>
+              <div class="author-info"><strong>Rajesh Kumar</strong><span>Blogger &amp; Content Creator, India</span></div>
+            </div>
+          </article>
+          <article class="glass-card testimonial-card reveal">
+            <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+            <p class="testimonial-text">"Delivered exactly what was promised. Detailed audit report, step-by-step optimization, and our PageSpeed score went from red to green. Will hire again."</p>
+            <div class="testimonial-author">
+              <div class="avatar" aria-hidden="true">AL</div>
+              <div class="author-info"><strong>Amanda Lopez</strong><span>Marketing Manager, Canada</span></div>
+            </div>
+          </article>
+          <article class="glass-card testimonial-card reveal">
+            <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+            <p class="testimonial-text">"Kishan set up Redis, Cloudflare, and LiteSpeed cache on our server. The difference was night and day. Best WordPress speed expert I've worked with."</p>
+            <div class="testimonial-author">
+              <div class="avatar" aria-hidden="true">DW</div>
+              <div class="author-info"><strong>David Wilson</strong><span>SaaS Founder, Australia</span></div>
+            </div>
+          </article>
+          <article class="glass-card testimonial-card reveal">
+            <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+            <p class="testimonial-text">"Fast communication, transparent process, and measurable results. Our bounce rate dropped significantly after Kishan's optimization work."</p>
+            <div class="testimonial-author">
+              <div class="avatar" aria-hidden="true">EF</div>
+              <div class="author-info"><strong>Emma Foster</strong><span>WooCommerce Store Owner, Germany</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq" aria-labelledby="faq-heading">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">FAQ</span>
+          <h2 class="section-title" id="faq-heading">Frequently Asked Questions</h2>
+          <p class="section-desc">Everything you need to know about WordPress speed optimization services.</p>
+        </div>
+        <div class="faq-list" role="list">
+          <div class="faq-item" role="listitem">
+            <button class="faq-question" aria-expanded="false">What is WordPress speed optimization?</button>
+            <div class="faq-answer"><p>WordPress speed optimization is the process of improving your website's loading time through techniques like caching, image compression, code minification, database cleanup, CDN setup, and server configuration. A faster WordPress site improves user experience, SEO rankings, and conversion rates.</p></div>
+          </div>
+          <div class="faq-item" role="listitem">
+            <button class="faq-question" aria-expanded="false">How long does WordPress speed optimization take?</button>
+            <div class="faq-answer"><p>Most WordPress speed optimization projects are completed within 3–7 business days, depending on site complexity, number of plugins, hosting environment, and the scope of work required. A simple blog may take less time, while a large WooCommerce store may need more extensive optimization.</p></div>
+          </div>
+          <div class="faq-item" role="listitem">
+            <button class="faq-question" aria-expanded="false">Will speed optimization break my WordPress website?</button>
+            <div class="faq-answer"><p>No. I follow a careful, tested approach with staging environment testing before applying changes to your live site. All optimizations are reversible, and I provide full documentation of every change made during the process.</p></div>
+          </div>
+          <div class="faq-item" role="listitem">
+            <button class="faq-question" aria-expanded="false">What PageSpeed score can I expect after optimization?</button>
+            <div class="faq-answer"><p>My optimization process is designed to help achieve excellent PageSpeed Insights and Core Web Vitals scores depending on hosting, theme, plugins, third-party scripts, and server configuration. I do not guarantee specific scores, but most clients see significant measurable improvements.</p></div>
+          </div>
+          <div class="faq-item" role="listitem">
+            <button class="faq-question" aria-expanded="false">Do you optimize WooCommerce stores?</button>
+            <div class="faq-answer"><p>Yes. WooCommerce optimization is one of my core specialties. I optimize product pages, cart functionality, checkout flow, database queries, and implement object caching to dramatically improve eCommerce site performance and conversion rates.</p></div>
+          </div>
+          <div class="faq-item" role="listitem">
+            <button class="faq-question" aria-expanded="false">Can you optimize Elementor-built websites?</button>
+            <div class="faq-answer"><p>Absolutely. Elementor sites often suffer from render-blocking CSS and JavaScript. I optimize Elementor asset loading, reduce unused CSS, implement critical CSS, optimize fonts, and configure caching specifically for Elementor page builders.</p></div>
+          </div>
+          <div class="faq-item" role="listitem">
+            <button class="faq-question" aria-expanded="false">What tools do you use for performance testing?</button>
+            <div class="faq-answer"><p>I use Google PageSpeed Insights, GTmetrix, WebPageTest, Chrome DevTools Lighthouse, and Query Monitor for WordPress-specific debugging. This multi-tool approach ensures comprehensive analysis from both lab and field data perspectives.</p></div>
+          </div>
+          <div class="faq-item" role="listitem">
+            <button class="faq-question" aria-expanded="false">Do I need to change my hosting for better speed?</button>
+            <div class="faq-answer"><p>Not always. Many performance gains come from proper caching, CDN setup, image optimization, and code improvements within your current hosting. However, if your hosting is severely limiting performance, I will provide honest recommendations for better hosting options.</p></div>
+          </div>
+          <div class="faq-item" role="listitem">
+            <button class="faq-question" aria-expanded="false">What is included in a WordPress performance audit?</button>
+            <div class="faq-answer"><p>A performance audit includes a full PageSpeed and Core Web Vitals analysis, server response time check, plugin audit, database review, image analysis, caching assessment, and a detailed report with prioritized recommendations and estimated impact for each fix.</p></div>
+          </div>
+          <div class="faq-item" role="listitem">
+            <button class="faq-question" aria-expanded="false">Do you provide ongoing support after optimization?</button>
+            <div class="faq-answer"><p>Yes. I offer post-delivery support to ensure optimizations remain effective. This includes monitoring, troubleshooting any regressions caused by plugin updates or content changes, and making adjustments as needed to maintain performance.</p></div>
+          </div>
+          <div class="faq-item" role="listitem">
+            <button class="faq-question" aria-expanded="false">How do I hire you for WordPress speed optimization?</button>
+            <div class="faq-answer"><p>You can hire me directly on <a href="https://www.fiverr.com/kishanunjia" target="_blank" rel="noopener noreferrer">Fiverr</a> or <a href="https://www.freelancer.in/u/kishanunjia" target="_blank" rel="noopener noreferrer">Freelancer</a>. Simply send me your website URL and describe your performance goals. I'll review your site and provide a custom quote based on your specific needs.</p></div>
+          </div>
+          <div class="faq-item" role="listitem">
+            <button class="faq-question" aria-expanded="false">What are Core Web Vitals and why do they matter?</button>
+            <div class="faq-answer"><p>Core Web Vitals are Google's metrics for measuring real-world user experience: Largest Contentful Paint (LCP), Interaction to Next Paint (INP), and Cumulative Layout Shift (CLS). They are ranking factors in Google Search and directly impact how users perceive your site's speed and stability.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="section" id="contact" aria-labelledby="cta-heading">
+      <div class="container reveal">
+        <div class="cta-section">
+          <h2 id="cta-heading">Ready to Speed Up Your WordPress Site?</h2>
+          <p>Let's work together to improve your website performance, Core Web Vitals, and user experience. Get in touch today for a free initial consultation.</p>
+          <div class="cta-buttons">
+            <a href="https://www.fiverr.com/kishanunjia" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Hire on Fiverr</a>
+            <a href="https://www.freelancer.in/u/kishanunjia" class="btn btn-outline" target="_blank" rel="noopener noreferrer">Hire on Freelancer</a>
+            <a href="https://kishan-unjia.netlify.app/" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">View Portfolio</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="logo">
+            <span class="logo-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            </span>
+            Kishan Unjia
+          </a>
+          <p>Senior WordPress developer specializing in speed optimization, Core Web Vitals, WooCommerce, and Elementor performance.</p>
+          <div class="social-links">
+            <a href="https://www.linkedin.com/in/kishanunjia" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="https://github.com/kishanunjia" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+            </a>
+            <a href="https://kishan-unjia.netlify.app/" target="_blank" rel="noopener noreferrer" aria-label="Portfolio">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+            </a>
+          </div>
+        </div>
+        <div>
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="#services">Services</a></li>
+            <li><a href="#benefits">Benefits</a></li>
+            <li><a href="#process">Process</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#faq">FAQ</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Hire Me</h4>
+          <ul class="footer-links">
+            <li><a href="https://www.fiverr.com/kishanunjia" target="_blank" rel="noopener noreferrer">Fiverr Profile</a></li>
+            <li><a href="https://www.freelancer.in/u/kishanunjia" target="_blank" rel="noopener noreferrer">Freelancer Profile</a></li>
+            <li><a href="https://kishan-unjia.netlify.app/" target="_blank" rel="noopener noreferrer">Portfolio Website</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Kishan Unjia. All rights reserved. WordPress Speed Optimization Expert.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+
+  <!-- Sticky Mobile CTA -->
+  <div class="sticky-cta" id="stickyCta" role="complementary" aria-label="Quick hire actions">
+    <a href="https://www.fiverr.com/kishanunjia" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Fiverr</a>
+    <a href="https://www.freelancer.in/u/kishanunjia" class="btn btn-outline" target="_blank" rel="noopener noreferrer">Freelancer</a>
+  </div>
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://kishanunjia.github.io/speed-optimization/#website",
+        "url": "https://kishanunjia.github.io/speed-optimization/",
+        "name": "Kishan Unjia - WordPress Speed Optimization Expert",
+        "description": "Professional WordPress speed optimization services by Kishan Unjia with 12+ years of experience.",
+        "publisher": { "@id": "https://kishanunjia.github.io/speed-optimization/#person" }
+      },
+      {
+        "@type": "Person",
+        "@id": "https://kishanunjia.github.io/speed-optimization/#person",
+        "name": "Kishan Unjia",
+        "jobTitle": "WordPress Speed Optimization Expert",
+        "description": "Senior WordPress developer with 12+ years of experience in performance optimization, Core Web Vitals, WooCommerce, and Elementor.",
+        "url": "https://kishanunjia.github.io/speed-optimization/",
+        "sameAs": [
+          "https://www.fiverr.com/kishanunjia",
+          "https://www.freelancer.in/u/kishanunjia",
+          "https://kishan-unjia.netlify.app/",
+          "https://github.com/kishanunjia"
+        ]
+      },
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://kishanunjia.github.io/speed-optimization/#service",
+        "name": "WordPress Speed Optimization Services",
+        "description": "Expert WordPress speed optimization including WooCommerce, Elementor, Core Web Vitals, caching, CDN, and server optimization.",
+        "provider": { "@id": "https://kishanunjia.github.io/speed-optimization/#person" },
+        "url": "https://kishanunjia.github.io/speed-optimization/",
+        "areaServed": "Worldwide",
+        "serviceType": ["WordPress Speed Optimization", "WooCommerce Optimization", "Elementor Optimization", "Core Web Vitals", "Performance Audit"]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://kishanunjia.github.io/speed-optimization/" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "What is WordPress speed optimization?", "acceptedAnswer": { "@type": "Answer", "text": "WordPress speed optimization is the process of improving your website's loading time through techniques like caching, image compression, code minification, database cleanup, CDN setup, and server configuration." }},
+          { "@type": "Question", "name": "How long does WordPress speed optimization take?", "acceptedAnswer": { "@type": "Answer", "text": "Most WordPress speed optimization projects are completed within 3–7 business days, depending on site complexity, number of plugins, hosting environment, and the scope of work required." }},
+          { "@type": "Question", "name": "Will speed optimization break my WordPress website?", "acceptedAnswer": { "@type": "Answer", "text": "No. I follow a careful, tested approach with staging environment testing before applying changes to your live site. All optimizations are reversible." }},
+          { "@type": "Question", "name": "What PageSpeed score can I expect after optimization?", "acceptedAnswer": { "@type": "Answer", "text": "My optimization process is designed to help achieve excellent PageSpeed Insights and Core Web Vitals scores depending on hosting, theme, plugins, third-party scripts, and server configuration." }},
+          { "@type": "Question", "name": "Do you optimize WooCommerce stores?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. WooCommerce optimization is one of my core specialties including product pages, cart functionality, checkout flow, and object caching." }},
+          { "@type": "Question", "name": "Can you optimize Elementor-built websites?", "acceptedAnswer": { "@type": "Answer", "text": "Absolutely. I optimize Elementor asset loading, reduce unused CSS, implement critical CSS, optimize fonts, and configure caching for Elementor sites." }},
+          { "@type": "Question", "name": "What tools do you use for performance testing?", "acceptedAnswer": { "@type": "Answer", "text": "I use Google PageSpeed Insights, GTmetrix, WebPageTest, Chrome DevTools Lighthouse, and Query Monitor for WordPress-specific debugging." }},
+          { "@type": "Question", "name": "Do I need to change my hosting for better speed?", "acceptedAnswer": { "@type": "Answer", "text": "Not always. Many performance gains come from proper caching, CDN setup, image optimization, and code improvements within your current hosting." }},
+          { "@type": "Question", "name": "What is included in a WordPress performance audit?", "acceptedAnswer": { "@type": "Answer", "text": "A performance audit includes PageSpeed and Core Web Vitals analysis, server response time check, plugin audit, database review, image analysis, and a detailed report with prioritized recommendations." }},
+          { "@type": "Question", "name": "Do you provide ongoing support after optimization?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. I offer post-delivery support to ensure optimizations remain effective including monitoring and troubleshooting regressions." }},
+          { "@type": "Question", "name": "How do I hire you for WordPress speed optimization?", "acceptedAnswer": { "@type": "Answer", "text": "You can hire me on Fiverr or Freelancer. Send your website URL and performance goals for a custom quote." }},
+          { "@type": "Question", "name": "What are Core Web Vitals and why do they matter?", "acceptedAnswer": { "@type": "Answer", "text": "Core Web Vitals are Google's metrics for measuring user experience: LCP, INP, and CLS. They are ranking factors in Google Search." }}
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- JavaScript -->
+  <script>
+  (function () {
+    'use strict';
+
+    /* Loading Screen */
+    window.addEventListener('load', function () {
+      var loader = document.getElementById('loader');
+      if (loader) {
+        loader.classList.add('hidden');
+        loader.setAttribute('aria-hidden', 'true');
+      }
+    });
+
+    /* Theme Toggle */
+    var themeToggle = document.getElementById('themeToggle');
+    var html = document.documentElement;
+    var savedTheme = localStorage.getItem('theme');
+    if (savedTheme) html.setAttribute('data-theme', savedTheme);
+
+    if (themeToggle) {
+      themeToggle.addEventListener('click', function () {
+        var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+      });
+    }
+
+    /* Sticky Navigation */
+    var nav = document.getElementById('nav');
+    var backToTop = document.getElementById('backToTop');
+    var stickyCta = document.getElementById('stickyCta');
+
+    function onScroll() {
+      var y = window.scrollY;
+      if (nav) nav.classList.toggle('scrolled', y > 50);
+      if (backToTop) backToTop.classList.toggle('visible', y > 400);
+      if (stickyCta) stickyCta.classList.toggle('visible', y > 600);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    /* Mobile Navigation */
+    var hamburger = document.getElementById('hamburger');
+    var navLinks = document.getElementById('navLinks');
+    if (hamburger && navLinks) {
+      hamburger.addEventListener('click', function () {
+        var open = navLinks.classList.toggle('open');
+        hamburger.classList.toggle('active');
+        hamburger.setAttribute('aria-expanded', open);
+      });
+      navLinks.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', function () {
+          navLinks.classList.remove('open');
+          hamburger.classList.remove('active');
+          hamburger.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+
+    /* Back to Top */
+    if (backToTop) {
+      backToTop.addEventListener('click', function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+
+    /* Scroll Reveal Animations */
+    var revealEls = document.querySelectorAll('.reveal, .timeline-item');
+    if ('IntersectionObserver' in window) {
+      var revealObs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            revealObs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+      revealEls.forEach(function (el) { revealObs.observe(el); });
+    } else {
+      revealEls.forEach(function (el) { el.classList.add('visible'); });
+    }
+
+    /* Counter Animation */
+    var counters = document.querySelectorAll('[data-count]');
+    if ('IntersectionObserver' in window && counters.length) {
+      var counterObs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          var el = entry.target;
+          var target = parseInt(el.getAttribute('data-count'), 10);
+          var duration = 2000;
+          var start = 0;
+          var startTime = null;
+          function step(ts) {
+            if (!startTime) startTime = ts;
+            var progress = Math.min((ts - startTime) / duration, 1);
+            var eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = Math.floor(eased * target) + (target === 98 ? '' : '+');
+            if (progress < 1) requestAnimationFrame(step);
+            else el.textContent = target + (target === 98 ? '%' : '+');
+          }
+          requestAnimationFrame(step);
+          counterObs.unobserve(el);
+        });
+      }, { threshold: 0.5 });
+      counters.forEach(function (c) { counterObs.observe(c); });
+    }
+
+    /* FAQ Accordion */
+    document.querySelectorAll('.faq-item').forEach(function (item) {
+      var btn = item.querySelector('.faq-question');
+      if (!btn) return;
+      btn.addEventListener('click', function () {
+        var isActive = item.classList.contains('active');
+        document.querySelectorAll('.faq-item.active').forEach(function (open) {
+          open.classList.remove('active');
+          var q = open.querySelector('.faq-question');
+          if (q) q.setAttribute('aria-expanded', 'false');
+        });
+        if (!isActive) {
+          item.classList.add('active');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+
+    /* Smooth scroll for anchor links */
+    document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+      anchor.addEventListener('click', function (e) {
+        var id = this.getAttribute('href');
+        if (id === '#') return;
+        var target = document.querySelector(id);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  })();
+  </script>
+</body>
+</html>
