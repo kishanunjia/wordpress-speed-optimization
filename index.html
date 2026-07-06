@@ -2,7 +2,7 @@
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
   <!-- SEO Meta -->
@@ -11,13 +11,18 @@
   <meta name="keywords" content="WordPress speed optimization, Core Web Vitals, WooCommerce optimization, Elementor speed, PageSpeed Insights, WordPress performance expert, Kishan Unjia, website speed, Redis cache, LiteSpeed, Cloudflare setup">
   <meta name="author" content="Kishan Unjia">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://kishanunjia.github.io/speed-optimization/">
+  <link rel="canonical" href="https://kishanunjia.github.io/wordpress-speed-optimization/">
+
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="favicon.svg">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="WordPress Speed Optimization Expert | Kishan Unjia">
   <meta property="og:description" content="Improve PageSpeed Insights, Core Web Vitals, and WordPress performance with 12+ years of professional experience.">
-  <meta property="og:url" content="https://kishanunjia.github.io/speed-optimization/">
+  <meta property="og:url" content="https://kishanunjia.github.io/wordpress-speed-optimization/">
   <meta property="og:site_name" content="Kishan Unjia - WordPress Speed Expert">
   <meta property="og:locale" content="en_US">
 
@@ -49,6 +54,7 @@
       --radius: 16px;
       --radius-sm: 10px;
       --nav-h: 72px;
+      --safe-top: env(safe-area-inset-top, 0px);
       --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
@@ -65,7 +71,11 @@
 
     /* ===== Reset & Base ===== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; scroll-padding-top: var(--nav-h); }
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: calc(var(--nav-h) + var(--safe-top));
+      background: var(--bg);
+    }
     body {
       font-family: 'Poppins', system-ui, -apple-system, sans-serif;
       background: var(--bg);
@@ -73,6 +83,8 @@
       line-height: 1.6;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      min-height: 100dvh;
     }
     img { max-width: 100%; height: auto; display: block; }
     a { color: var(--primary); text-decoration: none; transition: color var(--transition); }
@@ -119,13 +131,14 @@
     /* ===== Navigation ===== */
     .nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-      height: var(--nav-h);
-      transition: background var(--transition), box-shadow var(--transition);
-    }
-    .nav.scrolled {
+      height: calc(var(--nav-h) + var(--safe-top));
+      padding-top: var(--safe-top);
       background: var(--glass);
       backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--glass-border);
+      transition: background var(--transition), box-shadow var(--transition);
+    }
+    .nav.scrolled {
       box-shadow: var(--shadow);
     }
     .nav-inner {
@@ -205,8 +218,10 @@
 
     /* ===== Hero ===== */
     .hero {
-      min-height: 100vh; display: flex; align-items: center;
-      padding-top: var(--nav-h); position: relative; overflow: hidden;
+      min-height: 100vh; min-height: 100dvh;
+      display: flex; align-items: center;
+      padding-top: calc(var(--nav-h) + var(--safe-top));
+      position: relative; overflow: hidden;
     }
     .hero-blobs { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
     .blob {
@@ -523,17 +538,33 @@
       .footer-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 768px) {
+      .logo { font-size: 1.05rem; }
+      .logo-icon { width: 32px; height: 32px; }
+      .nav-actions .btn-primary { display: none; }
       .nav-links {
-        position: fixed; top: var(--nav-h); left: 0; right: 0;
+        position: fixed;
+        top: calc(var(--nav-h) + var(--safe-top));
+        left: 0; right: 0;
         background: var(--glass); backdrop-filter: blur(20px);
-        flex-direction: column; padding: 1.5rem; gap: 1rem;
-        border-bottom: 1px solid var(--glass-border);
-        transform: translateY(-120%); transition: transform var(--transition);
+        -webkit-backdrop-filter: blur(20px);
+        flex-direction: column; padding: 0 1.5rem;
+        gap: 0; max-height: 0; overflow: hidden;
+        border-bottom: 1px solid transparent;
+        opacity: 0; visibility: hidden; pointer-events: none;
+        transition: max-height var(--transition), opacity var(--transition),
+                    padding var(--transition), visibility var(--transition);
       }
-      .nav-links.open { transform: translateY(0); }
+      .nav-links.open {
+        max-height: 360px; padding: 1.5rem; gap: 1rem;
+        opacity: 1; visibility: visible; pointer-events: auto;
+        border-bottom-color: var(--glass-border);
+      }
       .hamburger { display: flex; }
-      .sticky-cta { display: flex; }
-      .back-to-top { bottom: 5.5rem; }
+      .sticky-cta {
+        display: flex;
+        padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+      }
+      .back-to-top { bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px)); }
       .section { padding: 3.5rem 0; }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -1143,19 +1174,19 @@
     "@graph": [
       {
         "@type": "WebSite",
-        "@id": "https://kishanunjia.github.io/speed-optimization/#website",
-        "url": "https://kishanunjia.github.io/speed-optimization/",
+        "@id": "https://kishanunjia.github.io/wordpress-speed-optimization/#website",
+        "url": "https://kishanunjia.github.io/wordpress-speed-optimization/",
         "name": "Kishan Unjia - WordPress Speed Optimization Expert",
         "description": "Professional WordPress speed optimization services by Kishan Unjia with 12+ years of experience.",
-        "publisher": { "@id": "https://kishanunjia.github.io/speed-optimization/#person" }
+        "publisher": { "@id": "https://kishanunjia.github.io/wordpress-speed-optimization/#person" }
       },
       {
         "@type": "Person",
-        "@id": "https://kishanunjia.github.io/speed-optimization/#person",
+        "@id": "https://kishanunjia.github.io/wordpress-speed-optimization/#person",
         "name": "Kishan Unjia",
         "jobTitle": "WordPress Speed Optimization Expert",
         "description": "Senior WordPress developer with 12+ years of experience in performance optimization, Core Web Vitals, WooCommerce, and Elementor.",
-        "url": "https://kishanunjia.github.io/speed-optimization/",
+        "url": "https://kishanunjia.github.io/wordpress-speed-optimization/",
         "sameAs": [
           "https://www.fiverr.com/kishanunjia",
           "https://www.freelancer.in/u/kishanunjia",
@@ -1165,18 +1196,18 @@
       },
       {
         "@type": "ProfessionalService",
-        "@id": "https://kishanunjia.github.io/speed-optimization/#service",
+        "@id": "https://kishanunjia.github.io/wordpress-speed-optimization/#service",
         "name": "WordPress Speed Optimization Services",
         "description": "Expert WordPress speed optimization including WooCommerce, Elementor, Core Web Vitals, caching, CDN, and server optimization.",
-        "provider": { "@id": "https://kishanunjia.github.io/speed-optimization/#person" },
-        "url": "https://kishanunjia.github.io/speed-optimization/",
+        "provider": { "@id": "https://kishanunjia.github.io/wordpress-speed-optimization/#person" },
+        "url": "https://kishanunjia.github.io/wordpress-speed-optimization/",
         "areaServed": "Worldwide",
         "serviceType": ["WordPress Speed Optimization", "WooCommerce Optimization", "Elementor Optimization", "Core Web Vitals", "Performance Audit"]
       },
       {
         "@type": "BreadcrumbList",
         "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://kishanunjia.github.io/speed-optimization/" }
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://kishanunjia.github.io/wordpress-speed-optimization/" }
         ]
       },
       {
